@@ -1,4 +1,4 @@
-# Telegram_Echo_Bot
+# HDH_Telegram_Echo_Bot
 
 # Имя бота: Echo_Bot
 # Никнейм бота: @Tetresh_bot
