@@ -1,0 +1,133 @@
+Файл содержит пример использования Django Shell.
+
+Активация Django Shell:
+python manage.py shell
+
+Импорт 2ух созданных моделей (models.py):
+>>> from articles.models import Article, Comment
+
+Вернуть все обьекты из DataBase (вернуть все статьи для этого примера):
+>>> Article.objects.all()
+
+Импорт модуля для работы со временем (т.к. у статей есть дата публикации):
+>>> from django.utils import timezone
+
+Создание экземпляра класса Article (создание новой статьи с определенными параметрами):
+>>> a = Article(article_title="Какая-то новая статья.", article_text="Новый текст статьи...", publish_date=timezone.now())
+
+Сохранение данных в DataBase:
+>>> a.save()
+
+Вывести на экран порядковый номер (id) статьи `a`:
+>>> a.id
+1
+
+Вывести на экран название (article_title) статьи `a`:
+>>> a.article_title
+'Какая-то новая статья.'
+
+Вывести на экран текст (article_text) статьи `a`:
+>>> a.article_text
+'Новый текст статьи...'
+
+Вывести на экран дату публикации (publish_date) статьи `a`:
+>>> a.publish_date
+datetime.datetime(2022, 7, 16, 14, 21, 0, 30319, tzinfo=datetime.timezone.utc)
+
+Узнать количество статей в списке:
+>>> Article.objects.all()
+<QuerySet [<Article: Article object (1)>]>
+
+Отображение после добавления метода __str__:
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> Article.objects.all()
+<QuerySet [<Article: Какая-то новая статья.>]>
+
+Проверка после добавления метода was_published_recently():
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.get(id=1)
+>>> a
+<Article: Какая-то новая статья.>
+>>> a.article_title
+'Какая-то новая статья.'
+>>> a.was_published_recently()
+'Статья опубликована недавно.'
+
+Получение статьи, используя filter (для фильтрации используется номер id=1):
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.filter(id=1)
+>>> a
+<QuerySet [<Article: Какая-то новая статья.>]>
+
+Получение статьи, используя filter (статья начинается с определенных символов/текста):
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.filter(article_title__startswith="Какая-то")
+>>> a
+<QuerySet [<Article: Какая-то новая статья.>]>
+
+Изменение данных статьи (если `a` не <QuerySet>):
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.get(id=1)
+>>> a
+<Article: Какая-то новая статья.>
+>>> a.article_title = "Название статьи изменено."
+>>> a.save()
+>>> a
+<Article: Название статьи изменено.>
+
+Получение статьи, используя filter (ВСЕ статьи, опубликованные в текущем году):
+>>> python manage.py shell
+>>> from django.utils import timezone
+>>> current_year = timezone.now().year
+>>> current_year
+2022
+>>> from articles.models import Article, Comment
+>>> Article.objects.filter(publish_date__year=current_year)
+<QuerySet [<Article: Название статьи изменено.>]>
+>>> Article.objects.filter(publish_date__year=current_year-1)
+<QuerySet []>
+
+Если комментарии к статье связаны через models.ForeignKey():
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.get(id=1)
+>>> a
+<Article: Название статьи изменено.>
+>>> a.comment_set.all()
+<QuerySet []>
+
+Оставить комментарий к статье:
+>>> a.comment_set.create(author_name="Viewshin Andreas", comment_text="Новый комментарий.")
+<Comment: Viewshin Andreas>
+>>> a.comment_set.all()
+<QuerySet [<Comment: Viewshin Andreas>]>
+
+Посчитать количество комментариев к статье:
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.get(id=1)
+>>> a.comment_set.count()
+1
+
+Получить комментарии от конкретного автора:
+>>> python manage.py shell
+>>> from articles.models import Article, Comment
+>>> a = Article.objects.get(id=1)
+>>> a.comment_set.filter(author_name__startswith="View")
+<QuerySet [<Comment: Viewshin Andreas>]>
+
+Удаление комментариев (нужно сначала поместить в переменную, например `cs` сокращенно от `comments`):
+>>> a.comment_set.all()
+<QuerySet [<Comment: Viewshin Andreas>]>
+>>> cs = a.comment_set.filter(author_name__startswith="View")
+>>> cs.delete()
+(1, {'articles.Comment': 1})
+>>> a.comment_set.all()
+<QuerySet []>
+
+

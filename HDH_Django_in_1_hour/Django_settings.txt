@@ -1,0 +1,26 @@
+Файл содержит базовые команды для использования Django.
+
+Активация (создание) Django проекта:
+>>> django-admin startproject myfirst
+
+Запуск сервера:
+выполнение команды без указания порта запускает сервер по default на 8000 порту (Starting development server at http://127.0.0.1:8000/)
+>>> python manage.py runserver
+
+Создание приложения:
+>>> python manage.py startapp articles
+
+Синхронизация моделей (models.py) с DataBase (создание миграций):
+>>> python manage.py makemigrations articles
+
+Вывод в консоль SQL-команд для выполнения миграций:
+>>> python manage.py sqlmigrate articles 0001
+
+Применение миграций:
+>>> python manage.py migrate
+
+Активация Django Shell:
+>>> python manage.py shell
+
+Создание учетное записа Admin:
+>>> python manage.py createsuperuser
