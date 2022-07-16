@@ -1,10 +1,11 @@
 # pyaudio.Playback_wav_file2. НЕ блокирует поток выполнения.
+
 import pyaudio
 import wave
 import sys
 import time
 
-from Path import path
+from path import path
 
 
 # path to file_name.wav

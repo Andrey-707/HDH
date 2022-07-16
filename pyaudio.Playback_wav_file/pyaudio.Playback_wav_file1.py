@@ -1,9 +1,10 @@
 # pyaudio.Playback_wav_file1. Блокирует поток выполнения.
+
 import pyaudio
 import wave
 import sys
 
-from Path import path
+from path import path
 
 
 CHUNK = 1024
