@@ -1,4 +1,4 @@
-Файл содержит базовые команды для использования Django.
+Файл содержит основные команды для использования Django.
 
 Активация (создание) Django проекта:
 >>> django-admin startproject myfirst
@@ -24,3 +24,11 @@
 
 Создание учетное записа Admin:
 >>> python manage.py createsuperuser
+
+
+
+
+
+
+
+

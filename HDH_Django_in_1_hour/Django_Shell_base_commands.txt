@@ -1,4 +1,4 @@
-Файл содержит пример использования Django Shell.
+Файл содержит основные команды для использования Django Shell.
 
 Активация Django Shell:
 python manage.py shell
