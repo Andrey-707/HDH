@@ -3,13 +3,15 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Article
 
+
 # Create your views here.
 def index(request):
 	"""
 	My view nemed idnex.
 	"""
-	# Срез списка из пяти элементов, отсортированного реверсивоно (минусовая сортировка)
+	# срез списка из пяти элементов, отсортированного реверсивоно (минусовая сортировка)
 	latest_article_list = Article.objects.order_by('-publish_date')[:5]
+	
 	return render(request, 'articles/list1.html', {'latest_article_list': latest_article_list})
 
 

@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class Article(models.Model):
 	"""
@@ -17,14 +18,20 @@ class Article(models.Model):
 
 	def was_published_recently(self):
 		"""
-		Метод указывает на то, была ли статья опубликована недавно.
+		Метод проверяет срок давности публикации статья. В случае, если статья опубликована
+		в ближайшие 7 дней возвращает текстовое сообщение, что статья была опубликована недавно.
+		Иначе, что статья опубликована давно.
 		"""
 		published_recently = self.publish_date >= (timezone.now() - datetime.timedelta(7))
 		return 'Статья опубликована недавно.' if published_recently else 'Статья опубликована давно.'
 
 	class Meta:
+		"""
+		Метакласс. Позволяет добавить данные о самой модели.
+		Делает русификацию имен.
+		"""
 		verbose_name = 'Статья'
-		verbose_name_plural = 'Статья'
+		verbose_name_plural = 'Статьи'
 
 
 class Comment(models.Model):
@@ -39,5 +46,9 @@ class Comment(models.Model):
 		return f'{self.author_name}'
 
 	class Meta:
+		"""
+		Метакласс. Позволяет добавить данные о самой модели.
+		Делает русификацию имен.
+		"""
 		verbose_name = 'Комментарий'
 		verbose_name_plural = 'Комментарии'
